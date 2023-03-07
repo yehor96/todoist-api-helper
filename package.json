@@ -1,0 +1,16 @@
+{
+  "name": "todoist-helper",
+  "version": "1.0.0",
+  "description": "Helper to create tasks in Todoist",
+  "main": "main.js",
+  "scripts": {
+    "create": "node create.js",
+    "delete": "node delete.js"
+  },
+  "author": "yehor96",
+  "license": "ISC",
+  "dependencies": {
+    "@doist/todoist-api-typescript": "^2.1.2"
+  },
+  "type": "module"
+}
