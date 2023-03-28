@@ -4,13 +4,14 @@
   "description": "Helper to create tasks in Todoist",
   "main": "main.js",
   "scripts": {
-    "create": "node create.js",
-    "delete": "node delete.js"
+    "create": "node todoist/create.js",
+    "delete": "node todoist/delete.js"
   },
   "author": "yehor96",
   "license": "ISC",
   "dependencies": {
-    "@doist/todoist-api-typescript": "^2.1.2"
+    "@doist/todoist-api-typescript": "^2.1.2",
+    "jsdom": "^21.1.1"
   },
   "type": "module"
 }
