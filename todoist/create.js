@@ -1,31 +1,25 @@
 import { TodoistApi } from "@doist/todoist-api-typescript";
+import parse from '../parse-html.js'
 
-//Set api key:
+//Set api key and parent project id:
 const api = new TodoistApi("");
-const taskPrefix = 'Chapter ';
-const projectName = process.argv[2];
-const tasksNum = process.argv[3];
+const parentId = '';
 
-api.getProjects()
-    .then(projects => {
-        let result = projects.filter(project => {
-            if (project.name == projectName) {
-                return project;
-            }
+const parsingResult = await parse()
+
+api.addProject({ 
+    name: parsingResult.title, 
+    parentId: parentId, 
+    color: 'berry_red'
+})
+.then(project => {
+    for (let i = 0; i < parsingResult.chapters.length; i++) {
+        api.addTask({
+            content: parsingResult.chapters[i],
+            description: parsingResult.durations[i],
+            order: i,
+            projectId: project.id
         })
-        return result;
-    })
-    .then(data => {
-        if (data.length) {
-            for (let i = 1; i <= tasksNum; i++) {
-                api.addTask({
-                    content: `${taskPrefix}${i}`,
-                    order: i - 1,
-                    projectId: data[0].id
-                })
-            }
-        } else {
-            console.log(`Project with name '${projectName}' not found`)
-        }
-    })
-    .catch((error) => console.log(error));
+    }
+})
+.catch((error) => console.log(error))
